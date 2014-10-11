@@ -1,0 +1,27 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:neo4j="http://www.springframework.org/schema/data/neo4j"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/data/neo4j http://www.springframework.org/schema/data/neo4j/spring-neo4j-2.0.xsd">
+
+
+    <neo4j:config id="graphDatabaseService"
+                  storeDirectory="target/ch09-current-simple-db"
+                  base-package="com.manning.neo4jia.chapter09.simple.domain"/>
+    <!-- Instructs SDN where to look for SDN entity/domain objects to register for use -->
+
+    <!-- Instructs SDN where to look for SDN repository interfaces -->
+    <neo4j:repositories base-package="com.manning.neo4jia.chapter09.simple.repository"/>
+
+
+
+    <bean id="conversionService"
+          class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="com.manning.neo4jia.chapter09.simple.spring.PhoneNumber2StrConverter"/>
+            </set>
+        </property>
+    </bean>
+
+</beans>

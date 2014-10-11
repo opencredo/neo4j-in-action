@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>neo4j-in-action</groupId>
+    <artifactId>parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>neo4j-in-action-reactor</name>
+    <url>http://manning.com/partner</url>
+
+    <properties>
+        <!-- General -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Plugin Versions -->
+        <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
+        <maven-dependency-plugin.version>2.8</maven-dependency-plugin.version>
+        <maven-surefire-plugin.version>2.16</maven-surefire-plugin.version>
+
+        <!-- Dependency versions -->
+        <neo4j.version>2.0.1</neo4j.version>
+        <slf4j.version>1.7.5</slf4j.version>
+        <log4j.version>1.2.17</log4j.version>
+        <junit.version>4.11</junit.version>
+
+        <java.source.level>1.7</java.source.level>
+        <java.target.level>1.7</java.target.level>
+    </properties>
+
+    <modules>
+        <module>chapter01</module>
+        <module>chapter02</module>
+        <module>chapter03</module>
+        <module>chapter04</module>
+        <module>chapter05</module>
+        <module>chapter06</module>
+        <module>chapter07/core</module>
+        <module>chapter07/spring</module>
+        <module>chapter08</module>
+        <module>chapter09/current/simple</module>
+        <module>chapter09/current/advanced</module>
+        <module>chapter09/legacy/simple</module>
+        <module>chapter09/legacy/advanced</module>
+        <module>chapter10/embedded</module>
+        <module>chapter10/server</module>
+        <module>chapter10/performance-demos-server</module>
+        <module>chapter10/performance-demos-embedded</module>
+        <module>chapter11/community/embedded</module>
+        <module>chapter11/enterprise/embedded</module>
+    </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.source.level}</source>
+                    <target>${java.target.level}</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>${maven-dependency-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <includes>
+                        <!-- Default SureFire Patterns -->
+                        <include>**/Test*.java</include>
+                        <include>**/*Test.java</include>
+                        <include>**/*TestCase.java</include>
+                        <!-- Additional -->
+                        <include>**/*Demos.java</include>
+                        <include>**/*Tests.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>repo.springsource.org.release</id>
+            <name>Spring Framework Maven Release Repository</name>
+            <url>http://repo.springsource.org/release</url>
+        </repository>
+        <repository>
+            <id>repo.neo4j.org.releases</id>
+            <name>Neo4j Releases Repository</name>
+            <url>http://m2.neo4j.org/content/repositories/releases</url>
+        </repository>
+        <repository>
+            <id>spring-milestones</id>
+            <url>http://repo.springsource.org/libs-milestone/</url>
+        </repository>
+        <repository>
+            <id>spring-libs-milestone-local</id>
+            <name>Spring Milestones</name>
+            <url>http://repo.springsource.org/libs-milestone-local</url>
+        </repository>
+    </repositories>
+
+
+</project>

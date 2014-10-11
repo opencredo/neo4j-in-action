@@ -1,0 +1,120 @@
+1) movies John likes
+start user=node:users(name = "John Johnson")
+match (user)-[:HAS_SEEN]->(movie)
+return movie;
+
+2) movies John's friends like like
+start john=node(1) match john-[:IS_FRIEND_OF]->(user)-[:HAS_SEEN]->(movie) return movie;
+
+3) movies John's friends like like and joh hasnt seen (INCORRECT)
+start john=node:users(name = "John Johnson")
+match
+john-[:IS_FRIEND_OF]->(user)-[:HAS_SEEN]->(movie),
+john-[r:HAS_SEEN]->(movie)
+return movie;
+
+
+3) movies John's friends like like and joh hasnt seen (CORRECT)
+start john=node:users(name = "John Johnson")
+match john-[:IS_FRIEND_OF]->(user)-[:HAS_SEEN]->(movie)
+where NOT john-[:HAS_SEEN]->(movie)
+return movie.name;
+
+RETURN clause exercises
+4) simple query, return node property value (property must NOT be null)
+start user=node:users(name = "John Johnson")
+match (user)-[:HAS_SEEN]->(movie)
+return movie.name;
+
+5) simple query, return named relationship property value
+start user=node:users(name = "John Johnson")
+match (user)-[h:HAS_SEEN]->(movie)
+return h.stars;
+
+6) return full path as a result
+start user=node:users(name = "John Johnson")
+match p=(user)-[h:HAS_SEEN]->(movie)
+return p;
+7) return distinct results
+start user=node(1, 3) match user-[:HAS_SEEN]->movie return distinct movie;
+8) return multiple values
+start john=node:users(name = "John Johnson")
+match
+recPath = john-[:IS_FRIEND_OF]->(user)-[:HAS_SEEN]->(movie)
+where NOT john-[:HAS_SEEN]->(movie)
+return movie.name, recPath;
+
+
+
+START clause exercises
+9) multiple start node, multiple match clauses
+start user=node(1, 3)
+match user-[:HAS_SEEN]->movie, user-[:HAS_SEEN]->movie
+return movie
+
+10) multiple named start nodes
+start john=node:users(name = "John Johnson"), jack=node(3)
+match john-[:HAS_SEEN]->movie, jack-[:HAS_SEEN]->movie
+return movie
+11) index lookup of start node
+start john=node:users(name = "John Johnson") return john;
+
+complex lucene index lookup
+start john=node:users('name:John* AND year_of_birth:[1950 TO 1982]') return john
+
+WHERE clause
+12) check if node property exists
+start john=node:users(name = "John Johnson")
+match john-[IS_FRIEND_OF]-friend
+where friend.email is null
+return friend
+
+
+
+
+
+CREATE nodes/relationships
+13) create node with properties
+create newuser  { name: 'Grace Spencer', yearOfBirth: 1982, email: 'grace@mycompany.com'} return newuser
+
+14) create relationship beween 2 existing nodes
+start john = node:users(name= "John Johnson"), grace = node(10)
+create john-[r:IS_FRIEND_OF]-grace
+return r
+
+15) create new node and relate it with existing node
+start john = node(1)
+create john-[r:IS_FRIEND_OF]-> (grace { name: 'Grace Spencer', yearOfBirth: 1982, email: 'grace@mycompany.com'})
+return r, grace
+
+16) delete node and relationship
+start grace = node(11)
+MATCH grace-[r]-()
+delete grace,r
+
+17) add/update node property
+start john=node(1)
+set john.yearOfBirth = 1973
+
+18) add/update property on multiple nides
+start john=node(1,2)
+set john.group = 'ADMINISTRATOR'
+
+
+AGGREGATE functions
+19) find user with most friends
+start user=node(*) match user-[:IS_FRIEND_OF]-() return distinct user, count(*) order by count(*) desc;
+average age of friends
+start john=node(1) match john-[:IS_FRIEND]-(friend) return avg(2014-friend.yearOfBirth);
+
+
+20) find number of relationships per type for given node
+start n=node(1) match n-[rel]-() return TYPE(rel), count(*);
+
+21) find all johns facebook friends that can introduce him to Kate
+start john=node(1),kate=node(3)  match p=john-[friendship:IS_FRIEND_OF*1..4]-(kate) where all(user in nodes(p) where has(user.facebookId)) return p;
+
+22) find all relationships types for a node with a count greater then 1
+start n=node(1) match n-[rel]-() with  TYPE(rel) as type, count(*) as count  where count > 1 return type;
+
+

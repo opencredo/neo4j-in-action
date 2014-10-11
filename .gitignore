@@ -1,0 +1,8 @@
+.idea
+*.iml
+*.ipr
+*.log
+target/
+the-test-embedded-db/
+the-test-server-db/
+the-chapter10-server-db/

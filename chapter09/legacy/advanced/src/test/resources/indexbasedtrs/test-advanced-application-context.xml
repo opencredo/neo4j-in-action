@@ -1,0 +1,33 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:neo4j="http://www.springframework.org/schema/data/neo4j"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+
+http://www.springframework.org/schema/data/neo4j http://www.springframework.org/schema/data/neo4j/spring-neo4j-2.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+
+
+
+    <context:annotation-config/>
+    <context:spring-configured/>
+
+    <neo4j:config id="graphDatabaseService"
+                  storeDirectory="target/ch09-legacy-advanced-db"
+                  base-package="com.manning.neo4jia.chapter09.advanced.indexbasedtrs.domain"/>
+
+    <!-- Instructs Spring Data where to look for repository implementations -->
+    <neo4j:repositories base-package="com.manning.neo4jia.chapter09.advanced.indexbasedtrs.repository"/>
+
+    <!-- We override the default Label based Type Representation strategy by supplying
+         our own "typeRepresentationStrategyFactory" which uses the Legacy indexed based
+         strategy. From SDN 3.0 onwards, the default type representation strategy
+         is Label based, and in 2.3 and previous it was Indexed based. -->
+    <bean id="typeRepresentationStrategyFactory" class="org.springframework.data.neo4j.support.typerepresentation.TypeRepresentationStrategyFactory">
+        <constructor-arg index="0" ref="graphDatabase"/>
+        <constructor-arg index="1" value="Indexed"/>
+    </bean>
+
+    <tx:annotation-driven mode="aspectj"/>
+
+
+</beans>
