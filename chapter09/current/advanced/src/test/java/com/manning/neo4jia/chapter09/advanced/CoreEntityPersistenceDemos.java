@@ -51,28 +51,7 @@ public class CoreEntityPersistenceDemos  extends CoreEntityPersistenceTestBase {
         User loadedUser = template.findOne(((NodeBacked)savedUser).getNodeId(), User.class);
         assertNotNull("user should be able to be loaded" , loadedUser);
     }
-
-    // NOTICE : @transactional annotation in contrast to version
-    //          defined in CoreEntityPersistenceImplicitTXDemos
-    @Ignore("Current Neo4j bug - investigating ....")
-    @Test
-    @Transactional
-    public void demoUpdatingOfUserName() throws Exception {
-
-        User savedUser = template.findOne(precreatedNodeId, User.class);
-
-        // Change user's name but don't save/persist the entity yet.
-        savedUser.setName("Changed-Name");
-        verifyCurrentNameInDB(((NodeBacked)savedUser).getNodeId(), precreatedOriginalName);
-        // Now persist it
-        ((NodeBacked)savedUser).persist();
-        verifyCurrentNameInDB(((NodeBacked)savedUser).getNodeId(), "Changed-Name");
-    }
-
-
-
-
-
+    
 }
 
 

@@ -14,11 +14,11 @@
     <packaging>jar</packaging>
 
     <properties>
-        <neo4j.version>2.0.3</neo4j.version>
+        <neo4j.version>2.1.5</neo4j.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <neo4j.springdata.version>3.1.1.RELEASE</neo4j.springdata.version>
+        <neo4j.springdata.version>3.2.1.RELEASE</neo4j.springdata.version>
         <hibernate-validator.version>4.2.0.Final</hibernate-validator.version>
-        <spring.version>3.2.9.RELEASE</spring.version>
+        <spring.version>4.0.7.RELEASE</spring.version>
     </properties>
 
     <name>chapter09-current-simple</name>
