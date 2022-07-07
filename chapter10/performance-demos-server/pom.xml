@@ -17,7 +17,7 @@
         <exec-maven-plugin.version>1.2.1</exec-maven-plugin.version>
         <maven-antrun-plugin.version>1.7</maven-antrun-plugin.version>
 
-        <spring.version>3.2.8.RELEASE</spring.version>
+        <spring.version>5.2.22.RELEASE</spring.version>
         <neo4j-rest-graphdb.version>2.0.1</neo4j-rest-graphdb.version>
         <chapter10ServerDBPath>${project.basedir}/the-chapter10-server-db</chapter10ServerDBPath>
     </properties>
