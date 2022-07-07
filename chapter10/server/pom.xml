@@ -15,7 +15,7 @@
     <name>chapter10-server</name>
     <properties>
         <neo4j-rest-graphdb.version>2.0.1</neo4j-rest-graphdb.version>
-        <spring.version>3.2.8.RELEASE</spring.version>
+        <spring.version>5.2.22.RELEASE</spring.version>
     </properties>
 
     <dependencies>
